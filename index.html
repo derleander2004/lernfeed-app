@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f3ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101113" media="(prefers-color-scheme: dark)">
+  <title>Sport-Lernfeed</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Lernfeed">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Gewähltes Farbschema sofort setzen, damit die Seite nicht kurz im falschen Modus aufblitzt.
+    try {
+      const t = localStorage.getItem('farbschema');
+      if (t === 'hell') document.documentElement.dataset.theme = 'light';
+      if (t === 'dunkel') document.documentElement.dataset.theme = 'dark';
+    } catch (e) {}
+  </script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="kopfleiste">
+      <div class="streak" title="Streak: Tage in Folge mit mindestens 10 Karten">🔥 <span id="streak-zahl">0</span></div>
+      <div class="heute" id="heute">0 / 10 heute</div>
+      <button class="fokus-schild" id="fokus-schild" type="button" hidden aria-label="Fokus beenden"></button>
+      <button class="icon-knopf" id="theme-knopf" type="button" aria-label="Farbschema wechseln">◐</button>
+      <button class="icon-knopf" id="menue-knopf" type="button" aria-label="Übersicht öffnen">☰</button>
+    </header>
+    <main class="feed" id="feed"></main>
+  </div>
+  <noscript>Diese App braucht JavaScript.</noscript>
+</body>
+</html>

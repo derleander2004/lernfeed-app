@@ -1,0 +1,826 @@
+/* ---------- Farben (hell / dunkel) ---------- */
+
+:root {
+  color-scheme: light;
+  --bg: #f4f3ef;
+  --flaeche: #ffffff;
+  --flaeche-2: #ecebe6;
+  --text: #1a1b1e;
+  --text-2: #5a5d65;
+  --rand: #d9d7cf;
+  --akzent: #2557d6;
+  --akzent-text: #ffffff;
+  --ok: #157a42;
+  --ok-bg: #e2f3e9;
+  --falsch: #b8322a;
+  --falsch-bg: #fbe5e3;
+  --warn: #7a5000;
+  --warn-bg: #fff1cf;
+  --schatten: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 28px rgb(0 0 0 / 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #101113;
+    --flaeche: #1b1c20;
+    --flaeche-2: #26282d;
+    --text: #ececee;
+    --text-2: #a4a7af;
+    --rand: #34363c;
+    --akzent: #7c9dff;
+    --akzent-text: #0c1020;
+    --ok: #52c487;
+    --ok-bg: #132f20;
+    --falsch: #ff7b6f;
+    --falsch-bg: #3b1815;
+    --warn: #f2c14e;
+    --warn-bg: #33290f;
+    --schatten: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 28px rgb(0 0 0 / 0.35);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101113;
+  --flaeche: #1b1c20;
+  --flaeche-2: #26282d;
+  --text: #ececee;
+  --text-2: #a4a7af;
+  --rand: #34363c;
+  --akzent: #7c9dff;
+  --akzent-text: #0c1020;
+  --ok: #52c487;
+  --ok-bg: #132f20;
+  --falsch: #ff7b6f;
+  --falsch-bg: #3b1815;
+  --warn: #f2c14e;
+  --warn-bg: #33290f;
+  --schatten: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 28px rgb(0 0 0 / 0.35);
+}
+
+/* ---------- Grundgerüst ---------- */
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none; /* verhindert "Ziehen zum Aktualisieren" in Chrome */
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 18px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding-top: env(safe-area-inset-top);
+}
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---------- Kopfleiste ---------- */
+
+.kopfleiste {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+}
+
+.streak {
+  white-space: nowrap;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.3s;
+}
+
+.streak.offen { opacity: 0.45; } /* heute noch keine 10 Karten */
+
+.heute.geschafft { color: var(--ok); font-weight: 600; }
+
+.heute {
+  margin-right: auto;
+  white-space: nowrap;
+  color: var(--text-2);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.icon-knopf {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--rand);
+  border-radius: 50%;
+  background: var(--flaeche);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.kopfleiste .icon-knopf + .icon-knopf { margin-left: -6px; }
+
+/* Fokus: nur ein Modul üben – Schild in Modulfarbe, Tipp darauf beendet den Fokus */
+.fokus-schild {
+  flex: none;
+  min-height: 40px;
+  padding: 6px 11px;
+  border: none;
+  border-radius: 20px;
+  background: var(--modul);
+  color: var(--modul-text);
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fokus-schild[hidden] { display: none; }
+
+.icon-knopf.mit-punkt { position: relative; }
+
+.icon-knopf.mit-punkt::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: var(--falsch);
+}
+
+/* ---------- Dialog ---------- */
+
+.dialog {
+  width: min(92vw, 420px);
+  padding: 20px;
+  border: none;
+  border-radius: 20px;
+  background: var(--flaeche);
+  color: var(--text);
+  box-shadow: var(--schatten);
+}
+
+.dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+
+.dialog h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.dialog p { margin: 0 0 10px; }
+
+.dialog-liste {
+  margin: 0 0 10px;
+  padding-left: 20px;
+  color: var(--falsch);
+  font-size: 0.88rem;
+}
+
+.dialog-knoepfe {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ---------- Datenbereich der Übersicht ---------- */
+
+.modul-block.daten.mit-erinnerung { outline: 2px solid var(--warn); }
+
+.modul-block.daten .hinweis-unklar { margin: 8px 0 0; }
+
+.daten-knoepfe {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+
+.daten-knoepfe:last-child { margin-bottom: 0; }
+
+.knopf.mitte { text-align: center; }
+
+.text-knopf {
+  min-height: 44px;
+  border: none;
+  background: none;
+  color: var(--akzent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Übersicht (Menü) ---------- */
+
+.uebersicht {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.25s cubic-bezier(.2,.8,.2,1), visibility 0s 0.25s;
+}
+
+.uebersicht.offen {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.25s cubic-bezier(.2,.8,.2,1);
+}
+
+.uebersicht-kopf {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
+  background: var(--bg);
+}
+
+.uebersicht-kopf h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.uebersicht-inhalt {
+  display: grid;
+  gap: 12px;
+  padding: 4px 12px;
+}
+
+.kennzahlen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.kennzahl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 4px;
+  border-radius: 14px;
+  background: var(--flaeche);
+  text-align: center;
+}
+
+.kennzahl-wert {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.kennzahl-label {
+  color: var(--text-2);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.modul-block {
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--flaeche);
+  box-shadow: var(--schatten);
+}
+
+.modul-block.ruht { opacity: 0.6; }
+
+.modul-titel {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.modul-titel .etikett { vertical-align: 2px; }
+.modul-titel .status { margin-left: 6px; vertical-align: 2px; }
+
+.modul-termin {
+  margin: 4px 0 0;
+  color: var(--text-2);
+  font-size: 0.88rem;
+}
+
+.leer {
+  margin: 10px 0 0;
+  color: var(--text-2);
+  font-size: 0.92rem;
+}
+
+.reife { margin-top: 14px; }
+
+.reife-zeile {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.balken {
+  height: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--flaeche-2);
+}
+
+.balken > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ok);
+}
+
+.reife-detail {
+  margin: 4px 0 0;
+  color: var(--text-2);
+  font-size: 0.8rem;
+}
+
+.lv-titel {
+  margin: 18px 0 0;
+  font-size: 0.95rem;
+}
+
+.level-liste {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.level-zeile {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--rand);
+}
+
+.level-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.level-name { font-weight: 600; line-height: 1.3; }
+
+.level-detail {
+  color: var(--text-2);
+  font-size: 0.8rem;
+}
+
+.status {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status.neu { background: var(--flaeche-2); color: var(--text-2); }
+.status.in-arbeit { background: color-mix(in srgb, var(--akzent) 16%, transparent); color: var(--akzent); }
+.status.geschafft { background: var(--ok-bg); color: var(--ok); }
+.status.auffrischen { background: var(--warn-bg); color: var(--warn); }
+
+.legende {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--flaeche);
+  font-size: 0.9rem;
+}
+
+.legende summary {
+  min-height: 32px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.legende dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  align-items: baseline;
+  margin: 8px 0 0;
+}
+
+.legende dd {
+  margin: 0;
+  color: var(--text-2);
+}
+
+/* ---------- Feed ---------- */
+
+.feed {
+  position: relative;
+  overflow: hidden;
+  overflow: clip; /* anders als "hidden" lässt sich "clip" auch per Skript nicht verschieben */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  padding: 4px 12px calc(12px + env(safe-area-inset-bottom));
+  will-change: transform;
+}
+
+.feed-hinweis {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+  z-index: 5;
+  transform: translate(-50%, -12px);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.feed-hinweis.sichtbar {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.feed-meldung {
+  margin: auto;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-2);
+}
+
+/* ---------- Karte ---------- */
+
+.karte {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--flaeche);
+  box-shadow: var(--schatten);
+}
+
+.karte-kopf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px 16px 0;
+}
+
+.etikett {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--flaeche-2);
+  color: var(--text-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.etikett.modul {
+  background: var(--modul, var(--akzent));
+  color: var(--modul-text, var(--akzent-text));
+}
+
+.etikett.art {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--rand);
+}
+
+.etikett.art.neu {
+  border-color: var(--akzent);
+  color: var(--akzent);
+}
+
+.ende-symbol {
+  margin: 8px 0 4px;
+  font-size: 2.6rem;
+}
+
+.karte-inhalt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 18px 18px;
+}
+
+.typ {
+  margin: 0 0 6px;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.frage {
+  margin: 0 0 14px;
+  font-size: 1.32rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.anleitung {
+  margin: 0 0 14px;
+  color: var(--text-2);
+  font-size: 0.95rem;
+}
+
+.antwortbereich {
+  display: grid;
+  gap: 10px;
+  margin-top: auto; /* schiebt die Antworten in den Daumenbereich */
+  padding-top: 8px;
+}
+
+.karte-aktionen {
+  display: grid;
+  gap: 6px;
+  padding: 0 14px 14px;
+}
+
+.karte-aktionen:empty { display: none; }
+
+.weiter-hinweis {
+  margin: 0;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 0.85rem;
+}
+
+/* ---------- Modulfarben und Grafiken ---------- */
+
+/* Je Modul drei Stufen: kräftig (Umrisse, Etikett), mittel (Nebenteile), zart (Flächen).
+   light-dark() nimmt automatisch den hellen oder dunklen Wert – passend zu color-scheme oben.
+   Module ohne eigene Farbe bekommen das Blau der App. */
+[data-modul] {
+  --modul: var(--akzent);
+  --modul-mittel: color-mix(in srgb, var(--akzent) 55%, var(--flaeche));
+  --modul-soft: color-mix(in srgb, var(--akzent) 14%, var(--flaeche));
+  --modul-text: var(--akzent-text);
+  --modul-ring: var(--modul); /* bleibt farbig, auch wenn ein Abzeichen --modul grau macht */
+}
+
+[data-modul="B1"] { /* Petrol */
+  --modul: light-dark(#0e7490, #5cc8de);
+  --modul-mittel: light-dark(#5fb3c7, #2b7d90);
+  --modul-soft: light-dark(#d5eef4, #173a42);
+  --modul-text: light-dark(#ffffff, #0c1020);
+}
+
+[data-modul="B2"] { /* Violett */
+  --modul: light-dark(#6d43c6, #b69cff);
+  --modul-mittel: light-dark(#a68be6, #6a52b8);
+  --modul-soft: light-dark(#ece5fb, #2a2342);
+  --modul-text: light-dark(#ffffff, #0c1020);
+}
+
+[data-modul="B3"] { /* Kupfer */
+  --modul: light-dark(#b3501c, #f0a065);
+  --modul-mittel: light-dark(#e3a072, #98542a);
+  --modul-soft: light-dark(#fbe9dd, #3b2617);
+  --modul-text: light-dark(#ffffff, #0c1020);
+}
+
+[data-modul="DMS1"] { /* Magenta */
+  --modul: light-dark(#b1287a, #f27cc0);
+  --modul-mittel: light-dark(#e389bd, #993a72);
+  --modul-soft: light-dark(#fbe4f1, #3b1a2f);
+  --modul-text: light-dark(#ffffff, #0c1020);
+}
+
+/* Symbolbild zwischen Frage und Antworten. Es bekommt nur den Platz, der übrig ist;
+   ist das zu wenig (lange Frage, kleines Display, Feedback nach der Antwort), verschwindet es. */
+.grafik {
+  flex: 1 1 0;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+  color: var(--modul, var(--akzent));
+}
+
+.grafik svg {
+  display: block;
+  width: auto;
+  height: min(100%, 150px);
+  max-width: 100%;
+}
+
+@container (max-height: 72px) {
+  .grafik svg { display: none; }
+}
+
+/* Level-Abzeichen in der Übersicht. Dieselbe Grafik für jeden Status, nur die Farben und Zusatzteile wechseln. */
+.abzeichen {
+  display: block;
+  width: 44px;
+  color: var(--modul, var(--akzent));
+}
+
+.abzeichen svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.abzeichen .band,
+.abzeichen .fortschritt,
+.abzeichen .marke { display: none; }
+
+.abzeichen.neu,
+.abzeichen.in-arbeit {
+  --modul: color-mix(in srgb, var(--text-2) 55%, var(--flaeche));
+  --modul-mittel: color-mix(in srgb, var(--text-2) 28%, var(--flaeche));
+  --modul-soft: var(--flaeche-2);
+}
+
+.abzeichen.in-arbeit .fortschritt { display: inline; stroke: var(--modul-ring, var(--akzent)); }
+
+.abzeichen.geschafft .band,
+.abzeichen.geschafft .marke.ok { display: inline; }
+
+.abzeichen.auffrischen {
+  --modul: color-mix(in srgb, var(--modul-ring) 50%, var(--flaeche));
+  --modul-mittel: color-mix(in srgb, var(--modul-ring) 30%, var(--flaeche));
+  --modul-soft: color-mix(in srgb, var(--modul-ring) 12%, var(--flaeche));
+}
+
+.abzeichen.auffrischen .band,
+.abzeichen.auffrischen .marke.warn { display: inline; }
+
+/* ---------- Knöpfe ---------- */
+
+.knopf {
+  min-height: 56px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--rand);
+  border-radius: 14px;
+  background: var(--flaeche);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  transition: transform 0.08s, background-color 0.15s, border-color 0.15s;
+}
+
+.knopf:active:not(:disabled) { transform: scale(0.98); }
+.knopf:disabled { cursor: default; }
+
+.knopf.haupt {
+  border-color: transparent;
+  background: var(--akzent);
+  color: var(--akzent-text);
+  text-align: center;
+}
+
+.knopf.mitte { text-align: center; }
+
+.knopf[hidden] { display: none; }
+
+.fokus-knopf {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.fokus-knopf.modul-farbe {
+  border-color: transparent;
+  background: var(--modul);
+  color: var(--modul-text);
+}
+
+.zwei-spalten {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.knopf.richtig, .knopf.gewaehlt-ok {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+
+.knopf.falsch, .knopf.gewaehlt-nicht-ok {
+  border-color: var(--falsch);
+  background: var(--falsch-bg);
+}
+
+.knopf:disabled:not(.richtig):not(.falsch):not(.gewaehlt-ok):not(.gewaehlt-nicht-ok) {
+  opacity: 0.5;
+}
+
+/* ---------- Inhalte einzelner Kartentypen ---------- */
+
+.loesung {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--flaeche-2);
+  font-size: 1.08rem;
+}
+
+.kernpunkte {
+  margin: 0;
+  padding: 14px 16px 14px 34px;
+  border-radius: 14px;
+  background: var(--flaeche-2);
+}
+
+.kernpunkte li + li { margin-top: 6px; }
+
+.lueckentext {
+  margin: 0 0 14px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.luecke {
+  display: inline-block;
+  min-width: 4.5em;
+  padding: 0 6px;
+  border-bottom: 3px solid var(--akzent);
+  text-align: center;
+}
+
+.luecke.ok { border-color: var(--ok); color: var(--ok); }
+.luecke.nicht-ok { border-color: var(--falsch); }
+.luecke s { color: var(--falsch); }
+.luecke .korrektur { color: var(--ok); }
+
+.stempel {
+  position: absolute;
+  top: 56px;
+  z-index: 2;
+  padding: 4px 12px;
+  border: 3px solid currentColor;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stempel.rechts { right: 18px; color: var(--ok); transform: rotate(10deg); }
+.stempel.links { left: 18px; color: var(--falsch); transform: rotate(-10deg); }
+
+/* ---------- Feedback nach der Antwort ---------- */
+
+.feedback {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.feedback.ok { background: var(--ok-bg); }
+.feedback.nicht-ok { background: var(--falsch-bg); }
+
+.feedback p { margin: 0; }
+.feedback p + p { margin-top: 8px; }
+
+.feedback-titel {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.feedback.ok .feedback-titel { color: var(--ok); }
+.feedback.nicht-ok .feedback-titel { color: var(--falsch); }
+
+.quelle {
+  color: var(--text-2);
+  font-size: 0.85rem;
+}
+
+.hinweis-unklar {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.9rem;
+}

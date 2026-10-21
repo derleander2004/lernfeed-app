@@ -1,0 +1,282 @@
+{
+  "format": "sport-lernfeed-paket",
+  "formatVersion": 1,
+  "erstellt": "2026-10-20T12:00:00+02:00",
+  "module": [
+    {
+      "kuerzel": "DEMO",
+      "name": "Demo – Testkarten (kein Uni-Material)",
+      "aktiv": true,
+      "prioritaet": "mittel",
+      "pruefungsform": "klausur",
+      "pruefungsformen_laut_po": [
+        "klausur"
+      ],
+      "pruefungsdauer_min": null,
+      "pruefungsdatum": null,
+      "pruefungsdatum_vorlaeufig": true,
+      "semester": [],
+      "lehrveranstaltungen": [
+        {
+          "kuerzel": "APP",
+          "art": "VL",
+          "titel": "So funktioniert die App",
+          "lv_nummer": null,
+          "lehrperson": null,
+          "semester": null,
+          "belegt": true,
+          "testat": null
+        },
+        {
+          "kuerzel": "SPORT",
+          "art": "VL",
+          "titel": "Sport-Allgemeinwissen",
+          "lv_nummer": null,
+          "lehrperson": null,
+          "semester": null,
+          "belegt": true,
+          "testat": null
+        }
+      ]
+    }
+  ],
+  "level": [
+    {
+      "id": "DEMO-APP-01",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "nr": 1,
+      "titel": "Lernlogik und Streak",
+      "datum": null,
+      "quellen": [
+        "demo"
+      ]
+    },
+    {
+      "id": "DEMO-SPORT-01",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "nr": 1,
+      "titel": "Allgemeinwissen Sport",
+      "datum": null,
+      "quellen": [
+        "demo"
+      ]
+    }
+  ],
+  "karten": [
+    {
+      "id": "DEMO-APP-01-001",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "karteikarte",
+      "frage": "Wann zählt ein Tag für deine Streak?",
+      "antwort": "Wenn du an diesem Tag mindestens 10 Karten beantwortet hast.",
+      "erklaerung": "Die Grenze von 10 Karten ist fest eingestellt – das schaffst du in wenigen Haltestellen.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-APP-01-002",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "mc",
+      "frage": "Wann gilt ein Level als geschafft?",
+      "optionen": [
+        "Jede Karte wurde an mindestens zwei verschiedenen Tagen richtig beantwortet.",
+        "Jede Karte wurde an mindestens einem Tag einmal richtig beantwortet.",
+        "Mindestens 80 % der Karten wurden an zwei Tagen richtig beantwortet.",
+        "Jede Karte wurde an einem einzigen Tag zweimal richtig beantwortet."
+      ],
+      "richtig": 0,
+      "erklaerung": "Zwei verschiedene Tage stellen sicher, dass du den Stoff nicht nur kurzfristig im Kopf hattest.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-APP-01-003",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "richtigfalsch",
+      "aussage": "Beantwortest du eine Karte falsch, rückt sie in die nächsthöhere Leitner-Box.",
+      "richtig": false,
+      "erklaerung": "Eine falsch beantwortete Karte fällt zurück in Box 1 und kommt noch in derselben Fahrt wieder.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-APP-01-004",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "lueckentext",
+      "text": "Steigt eine Karte von Box 3 in Box 4 auf, kommt sie ohne nahe Prüfung nach ___ Tagen wieder.",
+      "loesung": "8",
+      "optionen": [
+        "8",
+        "4",
+        "2",
+        "16"
+      ],
+      "erklaerung": "Die Abstände der Boxen 1 bis 5 sind 1, 2, 4, 8 und 16 Tage. Box 4 hat 8 Tage.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-APP-01-005",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "erklaerkarte",
+      "frage": "Erkläre, wie das Prüfungsdatum die Wiederholungsabstände beeinflusst.",
+      "kernpunkte": [
+        "Der Abstand ist höchstens halb so lang wie die verbleibende Zeit bis zur Prüfung.",
+        "Dadurch kommt jede Karte vor der Prüfung noch mindestens einmal dran.",
+        "Je näher die Prüfung, desto häufiger die Wiederholungen."
+      ],
+      "erklaerung": "Bei einer Erklärkarte formulierst du die Antwort erst selbst und vergleichst sie dann mit den Kernpunkten.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-APP-01-006",
+      "modul": "DEMO",
+      "lv": "DEMO-APP",
+      "level": "DEMO-APP-01",
+      "typ": "richtigfalsch",
+      "aussage": "Dein Lernfortschritt wird nur auf deinem Handy gespeichert.",
+      "richtig": true,
+      "erklaerung": "Deshalb gibt es „Fortschritt exportieren“: So sicherst du deinen Stand, z. B. vor einem Handywechsel.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-001",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "karteikarte",
+      "frage": "Wie viele Spielerinnen bzw. Spieler einer Fußballmannschaft stehen gleichzeitig auf dem Feld?",
+      "antwort": "11 – zehn Feldspieler und ein Torwart.",
+      "erklaerung": "Das gilt für das reguläre Elf-gegen-Elf-Spiel.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-002",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "mc",
+      "frage": "Wie lang ist eine Runde auf der Innenbahn einer Standard-Leichtathletikbahn?",
+      "optionen": [
+        "400 m",
+        "200 m",
+        "300 m",
+        "500 m"
+      ],
+      "richtig": 0,
+      "erklaerung": "Die Standard-Rundbahn misst auf Bahn 1 genau 400 m. 200-m-Bahnen gibt es in Hallen.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-003",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "richtigfalsch",
+      "aussage": "Ein Marathon ist 42,195 km lang.",
+      "richtig": true,
+      "erklaerung": "Die Strecke ist seit 1921 offiziell auf 42,195 km festgelegt.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-004",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "richtigfalsch",
+      "aussage": "Beim Volleyball darf eine Mannschaft den Ball bis zu fünfmal berühren, bevor er über das Netz muss.",
+      "richtig": false,
+      "erklaerung": "Erlaubt sind drei Ballberührungen; eine Blockberührung zählt dabei nicht mit.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-005",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "lueckentext",
+      "text": "Die SI-Einheit der Kraft ist das ___.",
+      "loesung": "Newton",
+      "optionen": [
+        "Newton",
+        "Joule",
+        "Watt",
+        "Pascal"
+      ],
+      "erklaerung": "1 Newton = 1 kg · m/s². Joule ist die Einheit der Energie, Watt der Leistung, Pascal des Drucks.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    },
+    {
+      "id": "DEMO-SPORT-01-006",
+      "modul": "DEMO",
+      "lv": "DEMO-SPORT",
+      "level": "DEMO-SPORT-01",
+      "typ": "erklaerkarte",
+      "frage": "Nenne die Disziplingruppen der Leichtathletik.",
+      "kernpunkte": [
+        "Laufen (Sprint, Mittel- und Langstrecke, Hürden)",
+        "Springen",
+        "Werfen und Stoßen",
+        "Mehrkampf"
+      ],
+      "erklaerung": "Gehen wird oft als eigene Gruppe gezählt oder dem Laufen zugeordnet.",
+      "quelle": {
+        "datei": "demo",
+        "stelle": "selbst geschrieben"
+      },
+      "unklar": null
+    }
+  ]
+}
